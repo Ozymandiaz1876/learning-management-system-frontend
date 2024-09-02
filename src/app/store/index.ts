@@ -1,13 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import userReducer from "./userSlice";
 import testReducer from "./testSlice";
+import authReducer from "./authSlice";
+import { ISSERVER, loadState, saveState } from "../../lib/utils";
+
+const preloadedState = ISSERVER ? undefined : loadState();
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    auth: authReducer,
     test: testReducer,
   },
+  preloadedState,
+});
+
+store.subscribe(() => {
+  const state: RootState = store.getState();
+  saveState(state.auth);
 });
 
 export type RootState = ReturnType<typeof store.getState>;
