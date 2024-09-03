@@ -67,7 +67,7 @@ const UniqueURLPage = ({ uniqueURLId }: { uniqueURLId: string }) => {
   }, [uniqueURLId, dispatch, router, authState]);
 
   const handleStartTest = () => {
-    router.push(`/test/start/${uniqueURLId}`);
+    router.push(`/test/start`);
   };
 
   return (
@@ -79,6 +79,7 @@ const UniqueURLPage = ({ uniqueURLId }: { uniqueURLId: string }) => {
       ) : testDetails ? (
         <>
           <h1 className="text-2xl font-bold mb-4">
+            You've been invited to take test :{" "}
             {testDetails.title || "Test Details"}
           </h1>
           <p>{testDetails.description}</p>
@@ -86,7 +87,7 @@ const UniqueURLPage = ({ uniqueURLId }: { uniqueURLId: string }) => {
             onClick={handleStartTest}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
           >
-            Start Test
+            Go to test page
           </button>
         </>
       ) : (

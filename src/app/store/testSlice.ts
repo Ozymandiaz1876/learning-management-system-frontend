@@ -1,6 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface TestState {
+  uniqueURLId: string | null;
+  testId: string | null;
+  title: string;
+  description: string;
+}
+
+const initialState: TestState = {
   uniqueURLId: null,
   testId: null,
   title: "",
@@ -11,7 +18,7 @@ const testSlice = createSlice({
   name: "test",
   initialState,
   reducers: {
-    setTestDetails: (state, action) => {
+    setTestDetails: (state, action: PayloadAction<TestState>) => {
       const { uniqueURLId, testId, title, description } = action.payload;
       state.uniqueURLId = uniqueURLId;
       state.testId = testId;
