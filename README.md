@@ -2,13 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
-
 ## Add env's
 ```
 NEXT_PUBLIC_API_BASE_URL=<your backend server>
 ```
-
+## Start the server
+First, run the development server:
 
 ```bash
 npm run dev
