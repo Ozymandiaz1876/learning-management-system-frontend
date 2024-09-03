@@ -1,58 +1,32 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface options {
-  text: string;
-  isCorrect?: boolean;
-}
-
-interface questions {
-  id: string;
-  questionText: string;
-  difficulty: number;
-  options: options[];
-}
-
-interface TestState {
-  id: string | null;
-  questions: questions[];
-  currentQuestionIndex: number;
-  score: number;
-}
-
-const initialState: TestState = {
-  id: null,
-  questions: [],
-  currentQuestionIndex: 0,
-  score: 0,
+const initialState = {
+  uniqueURLId: null,
+  testId: null,
+  title: "",
+  description: "",
 };
 
 const testSlice = createSlice({
   name: "test",
   initialState,
   reducers: {
-    startTest: (
-      state,
-      action: PayloadAction<{ id: string; questions: any[] }>
-    ) => {
-      state.id = action.payload.id;
-      state.questions = action.payload.questions;
-      state.currentQuestionIndex = 0;
-      state.score = 0;
+    setTestDetails: (state, action) => {
+      const { uniqueURLId, testId, title, description } = action.payload;
+      state.uniqueURLId = uniqueURLId;
+      state.testId = testId;
+      state.title = title;
+      state.description = description;
     },
-    answerQuestion: (state, action: PayloadAction<{ isCorrect: boolean }>) => {
-      if (action.payload.isCorrect) {
-        state.score += 1;
-      }
-      state.currentQuestionIndex += 1;
-    },
-    resetTest: (state) => {
-      state.id = null;
-      state.questions = [];
-      state.currentQuestionIndex = 0;
-      state.score = 0;
+    clearTestDetails: (state) => {
+      state.uniqueURLId = null;
+      state.testId = null;
+      state.title = "";
+      state.description = "";
     },
   },
 });
 
-export const { startTest, answerQuestion, resetTest } = testSlice.actions;
+export const { setTestDetails, clearTestDetails } = testSlice.actions;
+
 export default testSlice.reducer;

@@ -16,7 +16,10 @@ export const store = configureStore({
 
 store.subscribe(() => {
   const state: RootState = store.getState();
-  saveState(state.auth);
+  saveState({
+    auth: state.auth,
+    test: state.test,
+  });
 });
 
 export type RootState = ReturnType<typeof store.getState>;

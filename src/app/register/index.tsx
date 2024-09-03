@@ -5,8 +5,10 @@ import { useDispatch } from "react-redux";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { setAuthData } from "@/app/store/authSlice";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -54,6 +56,10 @@ const RegisterPage = () => {
     }
   };
 
+  function handleLoginRedirect(): void {
+    router.push("/login");
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Register</h1>
@@ -93,10 +99,16 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <Button type="submit" variant="default">
+        <Button className="w-full" type="submit" variant="default">
           Register
         </Button>
       </form>
+      <div className="mt-4 flex flex-row items-center justify-center">
+        <p className="text-gray-700">Already a member?</p>
+        <Button onClick={handleLoginRedirect} variant="link">
+          Login here
+        </Button>
+      </div>
     </div>
   );
 };

@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { setAuthData } from "../store/authSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+  const uniqueURLId = useSelector((state: RootState) => state.test.uniqueURLId);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,6 +49,14 @@ const LoginPage = () => {
           user,
         })
       );
+
+      // if uniqueURLId is in the URL, redirect to that page, else go to home
+
+      if (uniqueURLId) {
+        router.push(`/test/${uniqueURLId}`);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(error.response?.statusText);
@@ -53,6 +64,10 @@ const LoginPage = () => {
         console.error(error);
       }
     }
+  };
+
+  const handleRegisterRedirect = () => {
+    router.push("/register");
   };
 
   return (
@@ -72,10 +87,16 @@ const LoginPage = () => {
             onChange={handleChange}
           />
         </div>
-        <Button type="submit" variant="default">
+        <Button className="w-full" type="submit" variant="default">
           Login
         </Button>
       </form>
+      <div className="mt-4 flex flex-row items-center justify-center">
+        <p className="text-gray-700">Not a member?</p>
+        <Button onClick={handleRegisterRedirect} variant="link">
+          Register
+        </Button>
+      </div>
     </div>
   );
 };
