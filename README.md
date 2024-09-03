@@ -4,6 +4,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+## Add env's
+```
+NEXT_PUBLIC_API_BASE_URL=<your backend server>
+```
+
+
 ```bash
 npm run dev
 # or
