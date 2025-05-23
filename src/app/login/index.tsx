@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux"; // Removed useSelector
+import { useRouter, useSearchParams } from "next/navigation"; // Added useSearchParams
 import { setAuthData } from "../store/authSlice";
-import { AppDispatch, RootState } from "../store";
+import { AppDispatch } from "../store"; // Removed RootState as uniqueURLId is removed
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
-  const uniqueURLId = useSelector((state: RootState) => state.test.uniqueURLId);
+  const searchParams = useSearchParams(); // Initialize useSearchParams
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,9 +51,10 @@ const LoginPage = () => {
       );
 
       // if uniqueURLId is in the URL, redirect to that page, else go to home
+      const nextTestId = searchParams.get("nextTestId");
 
-      if (uniqueURLId) {
-        router.push(`/test/${uniqueURLId}`);
+      if (nextTestId) {
+        router.push(`/test/${nextTestId}`);
       } else {
         router.push("/");
       }

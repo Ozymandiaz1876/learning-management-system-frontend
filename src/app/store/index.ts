@@ -3,9 +3,7 @@ import { useDispatch } from "react-redux";
 import testReducer from "./testSlice";
 import authReducer from "./authSlice";
 import questionReducer from "./questionSlice";
-import { ISSERVER, loadState, saveState } from "../../lib/utils";
-
-const preloadedState = ISSERVER ? undefined : loadState();
+import { saveState } from "../../lib/utils";
 
 export const store = configureStore({
   reducer: {
@@ -13,16 +11,6 @@ export const store = configureStore({
     test: testReducer,
     question: questionReducer,
   },
-  preloadedState,
-});
-
-store.subscribe(() => {
-  const state: RootState = store.getState();
-  saveState({
-    auth: state.auth,
-    test: state.test,
-    question: state.question,
-  });
 });
 
 export type RootState = ReturnType<typeof store.getState>;

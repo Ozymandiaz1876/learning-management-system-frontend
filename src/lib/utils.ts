@@ -22,6 +22,7 @@ export const loadState = () => {
     return {
       auth: parsedState.auth,
       test: parsedState.test,
+      question: parsedState.question, // Add this line
     };
   } catch (err) {
     console.error("Could not load state from localStorage:", err);
@@ -31,10 +32,16 @@ export const loadState = () => {
 
 export const saveState = (state: RootState) => {
   if (ISSERVER) {
-    return undefined;
+    return;
   }
   try {
-    const serializedState = JSON.stringify(state);
+    // Only pick the slices you want to persist
+    const stateToSave = {
+      auth: state.auth,
+      test: state.test,
+      question: state.question, // Add question slice
+    };
+    const serializedState = JSON.stringify(stateToSave);
     localStorage.setItem("state", serializedState);
   } catch (err) {
     console.error("Could not save state to localStorage:", err);
